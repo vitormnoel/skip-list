@@ -1,22 +1,50 @@
-#include "skiplist.h"
+#include "skiplist.cpp"
+#include <time.h>
 
-int main()
+int main(void)
 {
+	clock_t tempo;
+	//CRIAÇÃO DA LISTA
     skip_list *sl=create_sl();
+	
 	int i=1;
-	for(;i<11111; ++i)
+	//INSERÇÃO DE 600K NÓS
+	for(;i<600000; ++i)
 	{
 		insert(sl, i, i);
 	}
-	for(i=11; i<11111; ++i)
+	
+	//REMOÇÃO DE 510911 NÓS
+	for(i=20; i<510911; ++i)
 	{
 		if(!erase(sl, i))
-			printf("No!\n");
+			printf("!!!\n");
 	}
+
+	//PRINT DA LISTA COM SUAS CAMADAS
 	print_sl(sl);
-	int *p=search(sl, 10);
-	if(p)
-		printf("value of key 10 is %d\n", *p);
+	
+	//PESQUISA POR VALOR
+	int *p=search(sl, 18);
+	
+	if(p){
+		printf("\n\n>>>>valor %d encontrado\n", *p);
+	}else if(p == NULL){
+		printf("\n\n>>>>valor nao encontrado");
+	}
+	
+	//LIBERANDO O ESPAÇO UTILIZADO PELA LISTA
 	sl_free(sl);
-    return 0;
+	
+/*	CALCULO DE TEMPO GASTO EM UMA EXECUÇÃO
+	1. PARA UTILIZAR BASTA COLOCAR ESSE COMANDO ANTES DA EXECUÇÃO DA PARTE QUE DESEJA CALCULAR
+	tempo = clock ();
+	
+	2. AO FIM DA EXECUÇÃO DO BLOCO DESEJADO, DEVE-SE COLOCAR ESSE PARA FINALIZAR A CONTAGEM
+	tempo = clock () - tempo;
+
+	3. PRINT DO TEMPO GASTO
+	printf("%f", ((float)tempo)/CLOCKS_PER_SEC);
+*/    
+	return 0;
 }
